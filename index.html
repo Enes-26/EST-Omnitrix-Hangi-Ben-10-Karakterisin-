@@ -52,7 +52,6 @@
       overflow: hidden;
     }
 
-    /* Üst Bar & Logo */
     .header-branding {
       display: flex;
       align-items: center;
@@ -277,7 +276,6 @@
       box-shadow: 0 12px 28px rgba(0, 255, 102, 0.45);
     }
 
-    /* Sonuç Kartı Tasarımı */
     .result-container {
       text-align: center;
       padding: 10px 0;
@@ -371,7 +369,6 @@
 
   <div class="quiz-container">
     
-    <!-- Üst Başlık & Marka Bölümü -->
     <div class="header-branding">
       <div class="estu-badge-wrapper">
         <div class="estu-logo-box">ESTÜ</div>
@@ -450,7 +447,7 @@
       <button class="btn-start" onclick="startQuiz()">Omnitrix'i Başlat ⚡</button>
     </div>
 
-    <!-- Soru 1: Ulaşım / Koşturmaca -->
+    <!-- Soru 1 -->
     <div class="card" id="step-1">
       <div class="question-badge">SORU 1 / 6</div>
       <div class="question-title">Sabah 08:30 dersi var; Espark önünde ya da Köprübaşı'nda Kırmızı 4 / Siyah 55 otobüs kuyruğundasın ve otobüs tıklım tıklım geldi. Ne yaparsın?</div>
@@ -462,7 +459,7 @@
       </div>
     </div>
 
-    <!-- Soru 2: Kampüs Ayazı -->
+    <!-- Soru 2 -->
     <div class="card" id="step-2">
       <div class="question-badge">SORU 2 / 6</div>
       <div class="question-title">2 Eylül Kampüsü'nde otobüsten indin, rektörlükten fakültene doğru yürürken o meşhur dondurucu Eskişehir ayazı başladı. Savunma taktiğin nedir?</div>
@@ -474,7 +471,7 @@
       </div>
     </div>
 
-    <!-- Soru 3: Yemekhane & Sosyallik -->
+    <!-- Soru 3 -->
     <div class="card" id="step-3">
       <div class="question-badge">SORU 3 / 6</div>
       <div class="question-title">Öğle arası geldi, yemekhanede sonu görünmeyen bir öğrenci sırası var. Masada ne konuşuluyor?</div>
@@ -486,7 +483,7 @@
       </div>
     </div>
 
-    <!-- Soru 4: Ders / İlk Sınav Kaygısı -->
+    <!-- Soru 4 -->
     <div class="card" id="step-4">
       <div class="question-badge">SORU 4 / 6</div>
       <div class="question-title">Üniversitedeki ilk vizeler/teslimler yaklaşıyor ve hocalar "Lisedeki gibi beklemeyin" dedi. Çalışma yöntemin ne olacak?</div>
@@ -498,7 +495,7 @@
       </div>
     </div>
 
-    <!-- Soru 5: Şehir Hayatı -->
+    <!-- Soru 5 -->
     <div class="card" id="step-5">
       <div class="question-badge">SORU 5 / 6</div>
       <div class="question-title">Cuma akşamı dersler bitti; Eskişehir merkezinde arkadaş grubunla nasıl bir plan yaparsın?</div>
@@ -510,7 +507,7 @@
       </div>
     </div>
 
-    <!-- Soru 6: Kriz Yönetimi -->
+    <!-- Soru 6 -->
     <div class="card" id="step-6">
       <div class="question-badge">SORU 6 / 6</div>
       <div class="question-title">Gruptaki arkadaşın ESTÜ OBS şifresini unuttu, ödevi teslim edemiyor ve panik halinde. Ona ilk tepkin ne olur?</div>
@@ -560,46 +557,45 @@
       wildmutt: 0
     };
 
-    // Karakterlerin yüksek kaliteli şeffaf PNG görselleri ve açıklamaları
     const alienProfiles = {
       fourarms: {
         name: "DÖRT KOL (FOUR ARMS)",
-        img: "https://static.wikia.nocookie.net/ben10/images/d/df/Four_Arms_Classic.png/revision/latest",
+        img: "https://upload.wikimedia.org/wikipedia/en/3/36/Four_Arms_Ben_10.png",
         desc: "Sen 2 Eylül Kampüsü'nün dondurucu ayazına, otobüs izdihamına ve üniversitenin ilk şoklarına saf fiziksel güç ve dirayetle kafa tutan gerçek bir kampüs savaşçısısın! Önüne ne kadar zor bir ders veya sorun çıkarsa çıksın asla geri adım atmazsın; arkadaş grubunun da her zaman arkasını kollayan o sağlam direğisin."
       },
       xlr8: {
         name: "ŞİMŞEK HIZ (XLR8)",
-        img: "https://static.wikia.nocookie.net/ben10/images/9/90/XLR8_Classic.png/revision/latest",
+        img: "https://images.wikia.com/ben10/images/archive/9/90/20210204193556%21XLR8_Classic.png",
         desc: "Ring otobüslerine depar atmakta, son dakikada amfiye süzülmekte ve son gece slayt taramakta senin üzerine kimse yok! Kampüste her işini pratik zekan ve ışık hızınla halledersin. Millet günlerce dert yanarken sen bir anda olayı çözüp soluğu Porsuk kıyısında alırsın."
       },
       greymatter: {
         name: "GRİ MADDE (GREY MATTER)",
-        img: "https://static.wikia.nocookie.net/ben10/images/e/e5/Grey_matter.png/revision/latest",
+        img: "https://images.wikia.com/ben10/images/archive/e/e5/20210204193540%21Grey_matter.png",
         desc: "ESTÜ'nün analitik beyni sensin! Kampüsteki rüzgar koridorundan sınavda çıkacak en kıl soruya, otobüs kalkış saatlerinden ders planlarına kadar her şeyi satranç oynar gibi önceden hesaplarsın. Düzenin ve mantığın sayesinde en karmaşık vize dönemleri bile senin elinde çocuk oyuncağına döner."
       },
       upgrade: {
         name: "GÜNCELLEME (UPGRADE)",
-        img: "https://static.wikia.nocookie.net/ben10/images/1/1d/Upgrade_Classic.png/revision/latest",
+        img: "https://images.wikia.com/ben10/images/archive/1/1d/20210204193547%21Upgrade_Classic.png",
         desc: "Teknoloji, tasarım, yaratıcılık ve pratik çözümler senin DNA'nda var! Sistemin açıklarını bulmak, sıradan şeyleri inovatif çözümlere dönüştürmek tam senin işin. Eskişehir'in öğrenci ortamında kendi özgün tarzınla hemen fark yaratacak, kampüste fark yaratan projelere imza atacaksın."
       },
       heatblast: {
         name: "ATEŞ TOPU (HEATBLAST)",
-        img: "https://static.wikia.nocookie.net/ben10/images/3/30/Heatblast_Classic.png/revision/latest",
+        img: "https://images.wikia.com/ben10/images/archive/3/30/20210204193542%21Heatblast_Classic.png",
         desc: "Eskişehir'in o dondurucu soğuğunda bile enerjisiyle tüm ortamı ısıtan kişi sensin! Pozitifliğin, tükenmeyen enerjin ve eğlenceli yapınla gruptaki herkesin modunu anında yükseltirsin. Kampüs hayatının zorlukları bile senin sıcak ruhunu söndüremez."
       },
       diamondhead: {
         name: "ELMAS KAFA (DIAMONDHEAD)",
-        img: "https://static.wikia.nocookie.net/ben10/images/d/df/Diamondhead_Classic.png/revision/latest",
+        img: "https://images.wikia.com/ben10/images/archive/d/df/20210204193538%21Diamondhead_Classic.png",
         desc: "Kaya gibi sağlam, sarsılmaz ve soğukkanlı bir karaktersin. İlk üniversite vizesinde herkes paniklerken sen derin bir nefes alıp masaya oturur ve işini bitirirsin. Baskı altında dağılmak yerine elmas gibi daha da parıldarsın; arkadaşların ne zaman çıkmaza girse sana sığınır."
       },
       ghostfreak: {
         name: "HAYALET YÜZ (GHOSTFREAK)",
-        img: "https://static.wikia.nocookie.net/ben10/images/5/5c/Ghostfreak_Classic.png/revision/latest",
+        img: "https://images.wikia.com/ben10/images/archive/5/5c/20210204193539%21Ghostfreak_Classic.png",
         desc: "Kütüphanenin en sessiz köşelerinde çalışan, ortalıkta görünmeyen ama teslim zamanı herkesi şaşırtan gizemli kampüs dehasısın! Sessizce gözlemler, yoklamayı riske atmaz, kriz anlarında arkadan gizlice her şeyi toparlar ve ortadan kaybolursun."
       },
       wildmutt: {
         name: "YABAN KÖPEK (WILDMUTT)",
-        img: "https://static.wikia.nocookie.net/ben10/images/1/18/Wildmutt_Classic.png/revision/latest",
+        img: "https://images.wikia.com/ben10/images/archive/1/18/20210204193551%21Wildmutt_Classic.png",
         desc: "Kelimelerden çok olağanüstü sezgileriyle hareket eden doğal bir ESTÜ'lüsün! Hangi hocanın ne soracağını ya da Eskişehir'de en iyi planın nereye yapılacağını içgüdülerinle hemen hissedersin. Sahte tavırlardan uzak, doğal ve tam bir dostsun."
       }
     };
@@ -639,7 +635,6 @@
     function showResult() {
       document.querySelectorAll(".card").forEach(el => el.classList.remove("active"));
       
-      // En çok seçilen uzaylıyı bul
       let topAlien = "fourarms";
       let maxScore = -1;
       for (const [alien, count] of Object.entries(scores)) {
