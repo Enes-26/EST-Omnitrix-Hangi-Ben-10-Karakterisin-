@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ESTÜ × Omnitrix | Hangi Ben 10 Karakterisin?</title>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;700;800&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #070a12;
+      --card-bg: rgba(18, 26, 43, 0.85);
+      --omnitrix-green: #00ff66;
+      --omnitrix-glow: rgba(0, 255, 102, 0.35);
+      --estu-blue: #003366;
+      --estu-light-blue: #38bdf8;
+      --text-white: #f8fafc;
+      --text-dim: #94a3b8;
+      --border-line: rgba(255, 255, 255, 0.1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      background-image: 
+        radial-gradient(circle at 15% 15%, rgba(0, 51, 102, 0.4) 0%, transparent 45%),
+        radial-gradient(circle at 85% 85%, rgba(0, 255, 102, 0.15) 0%, transparent 45%);
+      color: var(--text-white);
+      padding: 24px 16px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .quiz-container {
+      background: var(--card-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--border-line);
+      border-radius: 24px;
+      max-width: 740px;
+      width: 100%;
+      padding: 35px 30px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 35px rgba(0, 255, 102, 0.12);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Üst Bar & Logo */
+    .header-branding {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--border-line);
+    }
+
+    .estu-badge-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .estu-logo-box {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #002b5c, #0056b3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Chakra Petch', sans-serif;
+      font-weight: 800;
+      color: #fff;
+      font-size: 1.1rem;
+      letter-spacing: 1px;
+      border: 1.5px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 4px 12px rgba(0, 43, 92, 0.4);
+    }
+
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand-text .title {
+      font-size: 0.95rem;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      color: #ffffff;
+    }
+
+    .brand-text .sub {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+    }
+
+    .omnitrix-indicator {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #0d1624;
+      border: 3px solid var(--omnitrix-green);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 15px var(--omnitrix-green);
+      animation: pulse 2s infinite ease-in-out;
+    }
+
+    .omnitrix-hourglass {
+      width: 12px;
+      height: 12px;
+      background: var(--omnitrix-green);
+      clip-path: polygon(0 0, 100% 0, 50% 50%, 100% 100%, 0 100%, 50% 50%);
+    }
+
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 10px var(--omnitrix-green); transform: scale(1); }
+      50% { box-shadow: 0 0 22px var(--omnitrix-green); transform: scale(1.06); }
+    }
+
+    .progress-bar-container {
+      background: rgba(255, 255, 255, 0.06);
+      height: 8px;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 28px;
+    }
+
+    .progress-bar {
+      background: linear-gradient(90deg, #00ff66, #38bdf8);
+      height: 100%;
+      width: 0%;
+      transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 0 10px rgba(0, 255, 102, 0.5);
+    }
+
+    .card {
+      display: none;
+      animation: fadeUp 0.35s ease;
+    }
+
+    .card.active {
+      display: block;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h1 {
+      font-family: 'Chakra Petch', sans-serif;
+      font-size: 1.85rem;
+      font-weight: 800;
+      line-height: 1.25;
+      margin-bottom: 12px;
+      color: #fff;
+    }
+
+    .subtitle {
+      color: var(--text-dim);
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin-bottom: 26px;
+    }
+
+    .question-badge {
+      display: inline-block;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--omnitrix-green);
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+
+    .question-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      line-height: 1.4;
+      margin-bottom: 22px;
+      color: #ffffff;
+    }
+
+    select.department-select {
+      width: 100%;
+      padding: 15px 18px;
+      border-radius: 14px;
+      background-color: #0d1424;
+      border: 1.5px solid rgba(255, 255, 255, 0.15);
+      color: #fff;
+      font-size: 0.95rem;
+      outline: none;
+      cursor: pointer;
+      margin-bottom: 25px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    select.department-select:focus {
+      border-color: var(--omnitrix-green);
+      box-shadow: 0 0 12px var(--omnitrix-glow);
+    }
+
+    .options-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .option-btn {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1.5px solid rgba(255, 255, 255, 0.08);
+      padding: 15px 18px;
+      border-radius: 14px;
+      color: #e2e8f0;
+      text-align: left;
+      font-size: 0.95rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      transition: all 0.25s ease;
+      line-height: 1.45;
+    }
+
+    .option-btn:hover {
+      border-color: var(--omnitrix-green);
+      background: rgba(0, 255, 102, 0.06);
+      transform: translateX(5px);
+      color: #ffffff;
+    }
+
+    .option-letter {
+      background: rgba(255, 255, 255, 0.07);
+      color: var(--omnitrix-green);
+      font-family: 'Chakra Petch', sans-serif;
+      font-weight: 800;
+      border-radius: 8px;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 0.9rem;
+    }
+
+    .btn-start, .btn-action {
+      background: linear-gradient(135deg, #00ff66, #059669);
+      color: #021a0a;
+      font-weight: 800;
+      font-size: 1.05rem;
+      padding: 16px 32px;
+      border-radius: 14px;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: 0 8px 20px rgba(0, 255, 102, 0.3);
+      transition: all 0.25s ease;
+      text-decoration: none;
+    }
+
+    .btn-start:hover, .btn-action:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px rgba(0, 255, 102, 0.45);
+    }
+
+    /* Sonuç Kartı Tasarımı */
+    .result-container {
+      text-align: center;
+      padding: 10px 0;
+    }
+
+    .alien-avatar-wrapper {
+      position: relative;
+      width: 180px;
+      height: 180px;
+      margin: 0 auto 20px auto;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0, 255, 102, 0.25) 0%, rgba(13, 22, 36, 0.8) 70%);
+      border: 3px solid var(--omnitrix-green);
+      box-shadow: 0 0 30px var(--omnitrix-glow);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .alien-avatar-wrapper img {
+      width: 82%;
+      height: 82%;
+      object-fit: contain;
+      filter: drop-shadow(0 8px 12px rgba(0, 0, 0, 0.7));
+      transition: transform 0.4s ease;
+    }
+
+    .alien-avatar-wrapper:hover img {
+      transform: scale(1.1);
+    }
+
+    .user-dept-pill {
+      display: inline-block;
+      background: rgba(56, 189, 248, 0.12);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      color: var(--estu-light-blue);
+      padding: 6px 16px;
+      border-radius: 30px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .result-title {
+      font-family: 'Chakra Petch', sans-serif;
+      font-size: 2.2rem;
+      font-weight: 800;
+      margin-bottom: 16px;
+      letter-spacing: 0.5px;
+      color: #ffffff;
+      text-shadow: 0 0 20px rgba(0, 255, 102, 0.4);
+    }
+
+    .result-text {
+      font-size: 1rem;
+      line-height: 1.7;
+      color: #cbd5e1;
+      margin-bottom: 28px;
+      text-align: justify;
+      background: rgba(255, 255, 255, 0.02);
+      padding: 20px;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .action-buttons-group {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.08);
+      color: #fff;
+      font-weight: 700;
+      padding: 14px 24px;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="quiz-container">
+    
+    <!-- Üst Başlık & Marka Bölümü -->
+    <div class="header-branding">
+      <div class="estu-badge-wrapper">
+        <div class="estu-logo-box">ESTÜ</div>
+        <div class="brand-text">
+          <span class="title">ESKİŞEHİR TEKNİK ÜNİVERSİTESİ</span>
+          <span class="sub">2 Eylül Kampüsü × Omnitrix Arşivi</span>
+        </div>
+      </div>
+      <div class="omnitrix-indicator">
+        <div class="omnitrix-hourglass"></div>
+      </div>
+    </div>
+
+    <div class="progress-bar-container">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <!-- Giriş Ekranı -->
+    <div class="card active" id="step-0">
+      <h1>ESTÜ Karakterine Göre Hangi Ben 10 Kahramanısın?</h1>
+      <p class="subtitle">Eskişehir ayazı, ring otobüsü çilesi, hazırlık binası koridorları ve yaklaşan ilk vizeler... Seçimlerini yap, Omnitrix senin kampüsteki gerçek uzaylı formunu açığa çıkarsın!</p>
+      
+      <div class="question-title">Hangi bölüme yeni adım attın?</div>
+      <select class="department-select" id="deptSelect">
+        <option value="" disabled selected>Bölümünü seçerek başla...</option>
+        <optgroup label="Mühendislik Fakültesi">
+          <option value="Bilgisayar Mühendisliği">Bilgisayar Mühendisliği</option>
+          <option value="Elektrik-Elektronik Mühendisliği">Elektrik-Elektronik Mühendisliği</option>
+          <option value="Endüstri Mühendisliği">Endüstri Mühendisliği</option>
+          <option value="Makine Mühendisliği">Makine Mühendisliği</option>
+          <option value="İnşaat Mühendisliği">İnşaat Mühendisliği</option>
+          <option value="Kimya Mühendisliği">Kimya Mühendisliği</option>
+          <option value="Çevre Mühendisliği">Çevre Mühendisliği</option>
+          <option value="Malzeme Bilimi ve Mühendisliği">Malzeme Bilimi ve Mühendisliği</option>
+          <option value="Uçak Mühendisliği">Uçak Mühendisliği</option>
+        </optgroup>
+        <optgroup label="Mimarlık ve Tasarım Fakültesi">
+          <option value="Endüstriyel Tasarım">Endüstriyel Tasarım</option>
+          <option value="Mimarlık">Mimarlık</option>
+          <option value="İç Mimarlık">İç Mimarlık</option>
+          <option value="Tekstil ve Moda Tasarımı">Tekstil ve Moda Tasarımı</option>
+        </optgroup>
+        <optgroup label="Havacılık ve Uzay Bilimleri Fakültesi">
+          <option value="Pilotaj">Pilotaj</option>
+          <option value="Havacılık ve Uzay Mühendisliği">Havacılık ve Uzay Mühendisliği</option>
+          <option value="Hava Trafik Kontrolü">Hava Trafik Kontrolü</option>
+          <option value="Uçak Gövde ve Motor Bakımı">Uçak Gövde ve Motor Bakımı</option>
+          <option value="Havacılık Elektrik ve Elektroniği">Havacılık Elektrik ve Elektroniği</option>
+          <option value="Havacılık Yönetimi">Havacılık Yönetimi</option>
+        </optgroup>
+        <optgroup label="Bilgisayar ve Bilişim Bilimleri Fakültesi">
+          <option value="Yapay Zeka ve Makine Öğrenmesi">Yapay Zeka ve Makine Öğrenmesi</option>
+          <option value="Bilişim Sistemleri ve Teknolojileri">Bilişim Sistemleri ve Teknolojileri</option>
+          <option value="Bilgi Güvenliği Teknolojisi">Bilgi Güvenliği Teknolojisi</option>
+        </optgroup>
+        <optgroup label="Fen Fakültesi">
+          <option value="Matematik">Matematik</option>
+          <option value="İstatistik">İstatistik</option>
+          <option value="Fizik">Fizik</option>
+          <option value="Kimya">Kimya</option>
+          <option value="Biyoloji">Biyoloji</option>
+        </optgroup>
+        <optgroup label="Spor Bilimleri Fakültesi">
+          <option value="Beden Eğitimi ve Spor Öğretmenliği">Beden Eğitimi ve Spor Öğretmenliği</option>
+          <option value="Antrenörlük Eğitimi">Antrenörlük Eğitimi</option>
+          <option value="Spor Yöneticiliği">Spor Yöneticiliği</option>
+          <option value="Rekreasyon">Rekreasyon</option>
+        </optgroup>
+        <optgroup label="Meslek Yüksekokulları">
+          <option value="Porsuk MYO Programları">Porsuk MYO</option>
+          <option value="Ulaştırma MYO Programları">Ulaştırma MYO</option>
+          <option value="Bilişim Teknolojileri MYO Programları">Bilişim Teknolojileri MYO</option>
+        </optgroup>
+      </select>
+
+      <button class="btn-start" onclick="startQuiz()">Omnitrix'i Başlat ⚡</button>
+    </div>
+
+    <!-- Soru 1: Ulaşım / Koşturmaca -->
+    <div class="card" id="step-1">
+      <div class="question-badge">SORU 1 / 6</div>
+      <div class="question-title">Sabah 08:30 dersi var; Espark önünde ya da Köprübaşı'nda Kırmızı 4 / Siyah 55 otobüs kuyruğundasın ve otobüs tıklım tıklım geldi. Ne yaparsın?</div>
+      <div class="options-grid">
+        <button class="option-btn" onclick="selectAnswer('fourarms')"><span class="option-letter">A</span> İtiş kakışa aldırmam, omzumla yer açıp kendimi içeri atarım.</button>
+        <button class="option-btn" onclick="selectAnswer('xlr8')"><span class="option-letter">B</span> Hemen tramvaya koşar, oradan ringe yetişerek zamanı bükerim.</button>
+        <button class="option-btn" onclick="selectAnswer('greymatter')"><span class="option-letter">C</span> Otobüs saatleri ve durak yoğunluklarını ezberlemişimdir; 20 dk önceki araca binerim.</button>
+        <button class="option-btn" onclick="selectAnswer('ghostfreak')"><span class="option-letter">D</span> O kalabalığı görünce sessizce geri çekilir, bugünkü dersi devamsızlık hakkıma yazarım.</button>
+      </div>
+    </div>
+
+    <!-- Soru 2: Kampüs Ayazı -->
+    <div class="card" id="step-2">
+      <div class="question-badge">SORU 2 / 6</div>
+      <div class="question-title">2 Eylül Kampüsü'nde otobüsten indin, rektörlükten fakültene doğru yürürken o meşhur dondurucu Eskişehir ayazı başladı. Savunma taktiğin nedir?</div>
+      <div class="options-grid">
+        <button class="option-btn" onclick="selectAnswer('heatblast')"><span class="option-letter">A</span> İlk gördüğüm binaya ya da Mediko'ya dalıp kendime kaynar bir çay/kahve alırım.</button>
+        <button class="option-btn" onclick="selectAnswer('diamondhead')"><span class="option-letter">B</span> İçlik, çift çorap, bere ve montla kale gibi giyinmişimdir; rüzgar bana çarpıp dağılır.</button>
+        <button class="option-btn" onclick="selectAnswer('fourarms')"><span class="option-letter">C</span> Montun önü açık yürürüm; ESTÜ ayazı bana sökmez, soğukla inatlaşırım.</button>
+        <button class="option-btn" onclick="selectAnswer('greymatter')"><span class="option-letter">D</span> Rüzgarın geliş açısını ve binaların kuytularını kullanarak aerodinamik rota çizerim.</button>
+      </div>
+    </div>
+
+    <!-- Soru 3: Yemekhane & Sosyallik -->
+    <div class="card" id="step-3">
+      <div class="question-badge">SORU 3 / 6</div>
+      <div class="question-title">Öğle arası geldi, yemekhanede sonu görünmeyen bir öğrenci sırası var. Masada ne konuşuluyor?</div>
+      <div class="options-grid">
+        <button class="option-btn" onclick="selectAnswer('wildmutt')"><span class="option-letter">A</span> Menüde ne var diye uzaktan kokusunu almaya çalışır, sabırla sıramı beklerim.</button>
+        <button class="option-btn" onclick="selectAnswer('upgrade')"><span class="option-letter">B</span> "Yemekhane turnike kart sistemini hacklesek sıra nasıl biterdi?" diye teknoloji tartışırım.</button>
+        <button class="option-btn" onclick="selectAnswer('heatblast')"><span class="option-letter">C</span> Sıradaki herkesle geyik yapar, ortamı canlandırıp beklemeyi eğlenceye çeviririm.</button>
+        <button class="option-btn" onclick="selectAnswer('diamondhead')"><span class="option-letter">D</span> Sıranın ne kadar sürdüğüne aldırmam, sakinliğimi korur tabldotumu bitiririm.</button>
+      </div>
+    </div>
+
+    <!-- Soru 4: Ders / İlk Sınav Kaygısı -->
+    <div class="card" id="step-4">
+      <div class="question-badge">SORU 4 / 6</div>
+      <div class="question-title">Üniversitedeki ilk vizeler/teslimler yaklaşıyor ve hocalar "Lisedeki gibi beklemeyin" dedi. Çalışma yöntemin ne olacak?</div>
+      <div class="options-grid">
+        <button class="option-btn" onclick="selectAnswer('xlr8')"><span class="option-letter">A</span> Son gece 1.5x hızda slayt ve video bitirip mucize yaratmaya odaklanırım.</button>
+        <button class="option-btn" onclick="selectAnswer('greymatter')"><span class="option-letter">B</span> İlk günden itibaren renkli kalemlerle düzenli not çıkarmış ve plan yapmışımdır.</button>
+        <button class="option-btn" onclick="selectAnswer('ghostfreak')"><span class="option-letter">C</span> Kütüphanenin en izbe köşesinde geceleyerek sessiz sedasız konuyu hallederim.</button>
+        <button class="option-btn" onclick="selectAnswer('upgrade')"><span class="option-letter">D</span> Çıkmış soruları yapay zekaya özetletip en optimize şekilde kavramaya çalışırım.</button>
+      </div>
+    </div>
+
+    <!-- Soru 5: Şehir Hayatı -->
+    <div class="card" id="step-5">
+      <div class="question-badge">SORU 5 / 6</div>
+      <div class="question-title">Cuma akşamı dersler bitti; Eskişehir merkezinde arkadaş grubunla nasıl bir plan yaparsın?</div>
+      <div class="options-grid">
+        <button class="option-btn" onclick="selectAnswer('heatblast')"><span class="option-letter">A</span> Barlar Sokağı'na veya Kanatlı tarafına akıp haftanın stresini dansla/müzikle atarız.</button>
+        <button class="option-btn" onclick="selectAnswer('wildmutt')"><span class="option-letter">B</span> Porsuk Çayı kıyısına ya da Adalar'a çöküp çekirdek-kola eşliğinde gelip geçeni izleriz.</button>
+        <button class="option-btn" onclick="selectAnswer('diamondhead')"><span class="option-letter">C</span> Sazova veya Kentpark'a gidip sağlam ve nezih bir kafede uzun uzun kafa dinleriz.</button>
+        <button class="option-btn" onclick="selectAnswer('upgrade')"><span class="option-letter">D</span> Laptopları kapıp Haller Gençlik Merkezi'ne gider, hem muhabbet edip hem takılırız.</button>
+      </div>
+    </div>
+
+    <!-- Soru 6: Kriz Yönetimi -->
+    <div class="card" id="step-6">
+      <div class="question-badge">SORU 6 / 6</div>
+      <div class="question-title">Gruptaki arkadaşın ESTÜ OBS şifresini unuttu, ödevi teslim edemiyor ve panik halinde. Ona ilk tepkin ne olur?</div>
+      <div class="options-grid">
+        <button class="option-btn" onclick="selectAnswer('fourarms')"><span class="option-letter">A</span> "Sakin ol, hallederiz!" der, gerekirse hocanın odasını birlikte basmayı teklif ederim.</button>
+        <button class="option-btn" onclick="selectAnswer('upgrade')"><span class="option-letter">B</span> Şifre sıfırlama mekanizmasını veya öğrenci işleri mail formatını saniyeler içinde çözerim.</button>
+        <button class="option-btn" onclick="selectAnswer('diamondhead')"><span class="option-letter">C</span> "Panik yapma, sakin nefes al" diyerek onu yatıştırır ve mantıklı bir yol çizerim.</button>
+        <button class="option-btn" onclick="selectAnswer('ghostfreak')"><span class="option-letter">D</span> Çaktırmadan hocanın asistanına ulaşıp durumu arkadan sessizce çözerim.</button>
+      </div>
+    </div>
+
+    <!-- Sonuç Ekranı -->
+    <div class="card" id="resultCard">
+      <div class="result-container">
+        
+        <div class="alien-avatar-wrapper">
+          <img id="alienImg" src="" alt="Ben 10 Kahramanı">
+        </div>
+
+        <div class="user-dept-pill" id="userDeptDisplay">Bölüm Bilgisi</div>
+        <div class="result-title" id="alienName">UZAYLI ADI</div>
+        <div class="result-text" id="alienDesc"></div>
+
+        <div class="action-buttons-group">
+          <button class="btn-action" onclick="shareOnWhatsApp()">WhatsApp'ta Paylaş 💬</button>
+          <button class="btn-secondary" onclick="restartQuiz()">Tekrar Çöz ↺</button>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    let currentStep = 0;
+    let selectedDepartment = "";
+    const totalSteps = 6;
+
+    const scores = {
+      fourarms: 0,
+      xlr8: 0,
+      greymatter: 0,
+      upgrade: 0,
+      heatblast: 0,
+      diamondhead: 0,
+      ghostfreak: 0,
+      wildmutt: 0
+    };
+
+    // Karakterlerin yüksek kaliteli şeffaf PNG görselleri ve açıklamaları
+    const alienProfiles = {
+      fourarms: {
+        name: "DÖRT KOL (FOUR ARMS)",
+        img: "https://static.wikia.nocookie.net/ben10/images/d/df/Four_Arms_Classic.png/revision/latest",
+        desc: "Sen 2 Eylül Kampüsü'nün dondurucu ayazına, otobüs izdihamına ve üniversitenin ilk şoklarına saf fiziksel güç ve dirayetle kafa tutan gerçek bir kampüs savaşçısısın! Önüne ne kadar zor bir ders veya sorun çıkarsa çıksın asla geri adım atmazsın; arkadaş grubunun da her zaman arkasını kollayan o sağlam direğisin."
+      },
+      xlr8: {
+        name: "ŞİMŞEK HIZ (XLR8)",
+        img: "https://static.wikia.nocookie.net/ben10/images/9/90/XLR8_Classic.png/revision/latest",
+        desc: "Ring otobüslerine depar atmakta, son dakikada amfiye süzülmekte ve son gece slayt taramakta senin üzerine kimse yok! Kampüste her işini pratik zekan ve ışık hızınla halledersin. Millet günlerce dert yanarken sen bir anda olayı çözüp soluğu Porsuk kıyısında alırsın."
+      },
+      greymatter: {
+        name: "GRİ MADDE (GREY MATTER)",
+        img: "https://static.wikia.nocookie.net/ben10/images/e/e5/Grey_matter.png/revision/latest",
+        desc: "ESTÜ'nün analitik beyni sensin! Kampüsteki rüzgar koridorundan sınavda çıkacak en kıl soruya, otobüs kalkış saatlerinden ders planlarına kadar her şeyi satranç oynar gibi önceden hesaplarsın. Düzenin ve mantığın sayesinde en karmaşık vize dönemleri bile senin elinde çocuk oyuncağına döner."
+      },
+      upgrade: {
+        name: "GÜNCELLEME (UPGRADE)",
+        img: "https://static.wikia.nocookie.net/ben10/images/1/1d/Upgrade_Classic.png/revision/latest",
+        desc: "Teknoloji, tasarım, yaratıcılık ve pratik çözümler senin DNA'nda var! Sistemin açıklarını bulmak, sıradan şeyleri inovatif çözümlere dönüştürmek tam senin işin. Eskişehir'in öğrenci ortamında kendi özgün tarzınla hemen fark yaratacak, kampüste fark yaratan projelere imza atacaksın."
+      },
+      heatblast: {
+        name: "ATEŞ TOPU (HEATBLAST)",
+        img: "https://static.wikia.nocookie.net/ben10/images/3/30/Heatblast_Classic.png/revision/latest",
+        desc: "Eskişehir'in o dondurucu soğuğunda bile enerjisiyle tüm ortamı ısıtan kişi sensin! Pozitifliğin, tükenmeyen enerjin ve eğlenceli yapınla gruptaki herkesin modunu anında yükseltirsin. Kampüs hayatının zorlukları bile senin sıcak ruhunu söndüremez."
+      },
+      diamondhead: {
+        name: "ELMAS KAFA (DIAMONDHEAD)",
+        img: "https://static.wikia.nocookie.net/ben10/images/d/df/Diamondhead_Classic.png/revision/latest",
+        desc: "Kaya gibi sağlam, sarsılmaz ve soğukkanlı bir karaktersin. İlk üniversite vizesinde herkes paniklerken sen derin bir nefes alıp masaya oturur ve işini bitirirsin. Baskı altında dağılmak yerine elmas gibi daha da parıldarsın; arkadaşların ne zaman çıkmaza girse sana sığınır."
+      },
+      ghostfreak: {
+        name: "HAYALET YÜZ (GHOSTFREAK)",
+        img: "https://static.wikia.nocookie.net/ben10/images/5/5c/Ghostfreak_Classic.png/revision/latest",
+        desc: "Kütüphanenin en sessiz köşelerinde çalışan, ortalıkta görünmeyen ama teslim zamanı herkesi şaşırtan gizemli kampüs dehasısın! Sessizce gözlemler, yoklamayı riske atmaz, kriz anlarında arkadan gizlice her şeyi toparlar ve ortadan kaybolursun."
+      },
+      wildmutt: {
+        name: "YABAN KÖPEK (WILDMUTT)",
+        img: "https://static.wikia.nocookie.net/ben10/images/1/18/Wildmutt_Classic.png/revision/latest",
+        desc: "Kelimelerden çok olağanüstü sezgileriyle hareket eden doğal bir ESTÜ'lüsün! Hangi hocanın ne soracağını ya da Eskişehir'de en iyi planın nereye yapılacağını içgüdülerinle hemen hissedersin. Sahte tavırlardan uzak, doğal ve tam bir dostsun."
+      }
+    };
+
+    function startQuiz() {
+      const dept = document.getElementById("deptSelect").value;
+      if (!dept) {
+        alert("Lütfen önce ESTÜ'deki bölümünü seç!");
+        return;
+      }
+      selectedDepartment = dept;
+      goToStep(1);
+    }
+
+    function selectAnswer(alienKey) {
+      scores[alienKey] = (scores[alienKey] || 0) + 1;
+      if (currentStep < totalSteps) {
+        goToStep(currentStep + 1);
+      } else {
+        showResult();
+      }
+    }
+
+    function goToStep(step) {
+      document.querySelectorAll(".card").forEach(el => el.classList.remove("active"));
+      currentStep = step;
+      
+      const nextCard = document.getElementById(`step-${step}`);
+      if (nextCard) {
+        nextCard.classList.add("active");
+      }
+
+      const progress = (currentStep / totalSteps) * 100;
+      document.getElementById("progressBar").style.width = `${progress}%`;
+    }
+
+    function showResult() {
+      document.querySelectorAll(".card").forEach(el => el.classList.remove("active"));
+      
+      // En çok seçilen uzaylıyı bul
+      let topAlien = "fourarms";
+      let maxScore = -1;
+      for (const [alien, count] of Object.entries(scores)) {
+        if (count > maxScore) {
+          maxScore = count;
+          topAlien = alien;
+        }
+      }
+
+      const result = alienProfiles[topAlien];
+      document.getElementById("userDeptDisplay").innerText = `ESTÜ • ${selectedDepartment}`;
+      document.getElementById("alienName").innerText = result.name;
+      document.getElementById("alienDesc").innerText = result.desc;
+      document.getElementById("alienImg").src = result.img;
+      
+      document.getElementById("progressBar").style.width = "100%";
+      document.getElementById("resultCard").classList.add("active");
+    }
+
+    function shareOnWhatsApp() {
+      const alien = document.getElementById("alienName").innerText;
+      const text = `ESTÜ × Omnitrix testini çözdüm! ESTÜ ruhuma göre ben "${alien}" çıktım! Sen hangi Ben 10 karakterisin? Hemen çöz: ${window.location.href}`;
+      window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, '_blank');
+    }
+
+    function restartQuiz() {
+      for (let key in scores) scores[key] = 0;
+      currentStep = 0;
+      document.getElementById("deptSelect").selectedIndex = 0;
+      document.getElementById("progressBar").style.width = "0%";
+      document.querySelectorAll(".card").forEach(el => el.classList.remove("active"));
+      document.getElementById("step-0").classList.add("active");
+    }
+  </script>
+</body>
+</html>
